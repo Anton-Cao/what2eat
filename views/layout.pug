@@ -1,0 +1,17 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='shortcut icon' type='image/x-icon' href='/favicon.ico')
+    link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/semantic-ui@2.4.1/dist/semantic.min.css')
+    script(src='https://code.jquery.com/jquery-3.3.1.min.js')
+    script(src='https://cdn.jsdelivr.net/npm/semantic-ui@2.4.1/dist/semantic.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.slim.js')
+    link(rel='stylesheet' href='/stylesheets/style.css')
+    block includes
+  body
+    include nav.pug
+    div(id='content')
+      block content
+    div(class='ui inverted vertical footer segment' id='footer')
+      a(href='https://techx.io' target='_blank') built for mit techx

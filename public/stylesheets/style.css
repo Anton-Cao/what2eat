@@ -1,0 +1,12 @@
+#content {
+  padding: 15vh 20vw;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  display: block;
+  width: 100%;
+}

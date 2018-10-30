@@ -1,0 +1,29 @@
+extends layout
+
+block includes
+  script(src='/js/poll.js')
+
+block content
+  h1(style='font-size: 3em')= name
+  div(class='ui stackable grid')
+    div(class='four wide column')
+      h2 Hi!
+      p You are currently logged in as #{username}
+      button(id='logout-button' class='ui primary button') Logout
+    div(class='four wide column')
+      h2 People
+      ul(id='people-list')
+        each person in people
+          li= person
+    div(class='eight wide column')
+      h2 Food choices
+      div(id='food-choices' class='ui two stackable cards')
+        each choice in choices
+          div(class='ui card')
+            div(class='content')
+              div(class='header')= choice.name
+              div(class='meta')= choice.votes + ' votes'
+            if !choice.voted
+              button(class='ui button add-vote' name=choice.name) Add vote
+            else 
+              button(class='ui positive button' name=choice.name) Remove vote

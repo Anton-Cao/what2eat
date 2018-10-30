@@ -1,0 +1,29 @@
+extends layout
+
+block includes
+  script(src='/js/main.js')
+
+block content
+  h1(style='font-size: 4em') What2Eat lets you make polls to pick what food to get with your friends!
+  p Although it could be used as a poll for non-food things too...
+  br
+  div(class='ui stackable grid')
+    div(class='nine wide column')
+      img(src='/images/taco.svg' style='width: 100%')
+    div(class='seven wide column')
+      h2 Fill out info about your poll to start!
+      form(class='ui form' id='new-poll' action='/newpoll' method='POST')
+        div(class='form')
+          div(class='field')
+            label Poll name
+            input(id='poll-name' type='text' name='pollName' value='')
+          div(id='food-choices')
+            div(class='field')
+              label Option #1 
+              input(type='text' name='foodChoice' value='')
+            div(class='field')
+              label Option #2
+              input(type='text' name='foodChoice' value='')
+          br
+          button(class='ui button' id='add-food') Add option
+          input(class='ui primary button' type='submit' value='Create Poll')
