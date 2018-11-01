@@ -90,7 +90,7 @@ module.exports = function(io) {
           var person = people[i];
           if (username === person.username) {
             found = true;
-            if (person.password === '' || hashPassword(password) === hashPassword(person.password)) {
+            if (person.password === '' || hashPassword(password) === person.password) {
               req.session.username = username;
               req.session.pollId = id;
               req.session.save();
