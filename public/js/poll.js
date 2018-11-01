@@ -1,9 +1,10 @@
 var username;
+var urlBase = location.protocol + '//' + location.host + location.pathname;
 
 var postVote = function(name, upvote) {
     $.ajax({
         type: 'POST',
-        url: window.location.href + '/vote',
+        url: urlBase + '/vote',
         data: {
             choice: name,
             upvote: upvote,
@@ -61,14 +62,14 @@ $(document).ready(function() {
     // fetches username when page first loads
     $.ajax({
         type: 'GET',
-        url: window.location.href + '/whoami',
+        url: urlBase + '/whoami',
         success: function(name) {
             username = name;
         },
     });
 
     // set up websockets
-    var id = window.location.href.split('/').pop();
+    var id = window.location.pathname.split('/').pop();
     var socket = io();
     socket.emit('poll id', id); // to join the room corresponding to the id
     socket.on('update people', function(people) {
@@ -89,7 +90,7 @@ $(document).ready(function() {
     $('#logout-button').click(function(event) {
         $.ajax({
             type: 'POST',
-            url: window.location.href + '/logout',
+            url: urlBase + '/logout',
             success: function() {
                 location.reload(); // redirects to login page
             }

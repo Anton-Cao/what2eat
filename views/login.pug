@@ -4,7 +4,9 @@ block includes
   script(src='/js/login.js')
 
 block content
-  h1(style='font-size: 3em')= name
+  h1(style='font-size: 3em; display: inline-block; margin-right: 10px;')= name
+  button(class='ui button' id='copy') 
+    i(class="copy outline icon")
   div(class='ui stackable grid')
     div(class='four wide column')
       h2 Log in
