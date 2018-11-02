@@ -3,15 +3,22 @@ html
   head
     title= title
     link(rel='shortcut icon' type='image/x-icon' href='/favicon.ico')
-    link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/semantic-ui@2.4.1/dist/semantic.min.css')
     script(src='https://code.jquery.com/jquery-3.3.1.min.js')
     script(src='https://cdn.jsdelivr.net/npm/semantic-ui@2.4.1/dist/semantic.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.slim.js')
+    script(src='/js/main.js')
+
+    link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/semantic-ui@2.4.1/dist/semantic.min.css')
     link(rel='stylesheet' href='/stylesheets/style.css')
     block includes
   body
     include nav.pug
     div(id='content')
+      // include title and copy link button if rendering login or poll
+      if (typeof(name) !== 'undefined') 
+        h1(class='ui header' style='font-size: 3em; display: inline-block; margin-right: 10px;')= name
+        div(class='ui icon button' id='copy' data-tooltip='Copy link' style='margin-top: -10px;') 
+          i(class="copy outline icon")
       block content
     div(class='ui vertical footer segment' id='footer')
       a(href='https://techx.io' target='_blank') built for mit techx
