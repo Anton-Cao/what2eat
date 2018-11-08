@@ -20,7 +20,7 @@ io.on('connection', function(socket) {
   console.log('connected!');
   socket.on('poll id', function(id, msg) {
     console.log(id);
-    socket.join(id);
+    socket.join(id); // adds client to a room corresponding to the poll id
   });
 });
 

@@ -1,6 +1,10 @@
+// Use baseURL so URL params don't affect behavior
 var baseUrl = location.protocol + '//' + location.host + location.pathname;
 
 $(document).ready(function() {
+    /*
+    User login form
+    */
     $('#login-form').submit(function(event) {
         event.preventDefault();
         $.ajax({
@@ -20,6 +24,10 @@ $(document).ready(function() {
         return false;
     });
 
+    /*
+    Copies the URL to user's clipboard 
+    https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
+    */
     $('#copy').click(function(event) {
         var el = document.createElement('textarea');
         el.value = window.location.href;

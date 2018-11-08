@@ -85,7 +85,8 @@ module.exports = function(io) {
         res.send(404, 'Poll not found');
       } else {
         var people = data.people;            
-        var found = false;
+        var found = false; // whether user with matching username exists
+        // loop through all people in poll
         for (var i in people) {
           var person = people[i];
           if (username === person.username) {
@@ -102,6 +103,7 @@ module.exports = function(io) {
           }
         }
 
+        // create new user
         if (!found) {
           people.push({
             username,
@@ -140,7 +142,7 @@ module.exports = function(io) {
       res.status(401).send('Must be logged in to vote.');
       return;
     } else {
-      var choice = req.body.choice;
+      var choice = req.body.choice; // name of food choice
       var upvote = req.body.upvote; // is a string
       Poll.findById(id, function(err, data) {
         var foodChoices = data.foodChoices;

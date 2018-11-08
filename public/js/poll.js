@@ -1,6 +1,11 @@
-var username;
+var username; // fetches username when page loads
 var urlBase = location.protocol + '//' + location.host + location.pathname;
 
+/*
+Sends an upvote/downvote request
+name - name of food choice
+upvote - 'true' for upvote, anything else for downvote
+*/
 var postVote = function(name, upvote) {
     $.ajax({
         type: 'POST',
@@ -15,6 +20,13 @@ var postVote = function(name, upvote) {
     });
 }
 
+/*
+Helper method to create DOM element representing a food choice
+choice - Object, matches MongoDB model
+    choice.foodName
+    choice.voteCount
+    choice.voters
+*/
 var createFoodChoice = function(choice) {
     var name = choice.foodName;
     var voteCount = choice.voteCount;
@@ -69,10 +81,10 @@ $(document).ready(function() {
     });
 
     // set up websockets
-    var id = window.location.pathname.split('/').pop();
+    var id = window.location.pathname.split('/').pop(); // what2eat.com/poll/:id
     var socket = io();
-    socket.emit('poll id', id); // to join the room corresponding to the id
-    socket.on('update people', function(people) {
+    socket.emit('poll id', id); // join the room corresponding to the id
+    socket.on('update people', function(people) { // fires when a new user joins the poll
         $('#people-list').empty();
         people.forEach(person => {
             var li = document.createElement('li');
@@ -80,7 +92,7 @@ $(document).ready(function() {
             $('#people-list').append(li);
         });
     });
-    socket.on('update choices', function(foodChoices) {
+    socket.on('update choices', function(foodChoices) { // fires when the options have changed
         $('#food-choices').empty();
         foodChoices.forEach(choice => {
             $('#food-choices').append(createFoodChoice(choice));
@@ -97,6 +109,7 @@ $(document).ready(function() {
         })
     });
 
+    // click handler for upvote/downvote buttons initially on page
     $('.add-vote').click(function(event) {
         postVote(this.name, 'true');
     });
@@ -105,6 +118,10 @@ $(document).ready(function() {
         postVote(this.name, 'false');
     });
     
+    /*
+    Copies the URL to user's clipboard 
+    https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
+    */
     $('#copy').click(function(event) {
         var el = document.createElement('textarea');
         el.value = window.location.href;
