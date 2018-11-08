@@ -12,7 +12,7 @@ var PollSchema = new mongoose.Schema({
     }],
     people: [{
         username: String,
-        password: String,
+        password: String, // stores HASHED password using helpers/hash.js
     }],
 });
 

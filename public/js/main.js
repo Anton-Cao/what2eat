@@ -1,4 +1,4 @@
-var limit = 6;
+var limit = 6; // maximum number of choices for poll
 
 var deleteChoice = function(e) { // runs when delete button is clicked
     e.preventDefault();
@@ -8,10 +8,10 @@ var deleteChoice = function(e) { // runs when delete button is clicked
     }
     this.parentNode.parentNode.remove(); // remove the input field
 
-    // might have to relabel the Options
-    var options = Array.from($('#food-choices')[0].childNodes);
-    for (i in options) {
-        var label = options[i].firstChild;
+    // might have to relabel the choices
+    var choices = Array.from($('#food-choices')[0].childNodes);
+    for (i in choices) {
+        var label = choices[i].firstChild;
         label.innerText = `Option #${parseInt(i) + 1}`;
     }
 }
@@ -47,7 +47,7 @@ $(document).ready(function() {
         }
     });
     $('#new-poll').submit(function(e) {
-        if ($('#poll-name').val().length < 2) { // has to be at least two options
+        if ($('#poll-name').val().length < 2) { // has to be at least two choices
             e.preventDefault();
             $('#poll-name').parent().addClass('error');
         }  
