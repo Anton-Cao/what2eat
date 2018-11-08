@@ -16,4 +16,4 @@ Built for [MIT TechX](https://techx.io).
 # Production
 * Run `npm install` and `npm run create-env` as before
 * Change `NODE_ENV` to `"production"` in `.env` and make sure the mongo URI is correct and the secrets are secure
-* Run `npm run start`
+* Run `forever start ./bin/www`
