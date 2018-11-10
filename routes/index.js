@@ -32,6 +32,7 @@ module.exports = function(io) {
           var choices = data.foodChoices.map(choice => ({
             name: choice.foodName,
             votes: choice.voteCount,
+            voters: choice.voters,
             voted: choice.voters.indexOf(req.session.username) != -1,
           }));
           var people = data.people.map(person => person.username);
