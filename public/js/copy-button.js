@@ -14,4 +14,9 @@ $(document).ready(function() {
         document.execCommand('copy');
         document.body.removeChild(el);
     });
+
+    $('#copy').popup({
+        on: 'click',
+        content: 'Copied!'
+    });
 });
