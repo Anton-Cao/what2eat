@@ -47,6 +47,9 @@ var createFoodChoice = function(choice) {
     var votes = document.createElement('div');
     votes.className = 'meta';
     votes.innerText = voteCount + ' votes';
+    $(votes).popup({
+        html: choice.voters.join('<br>'),
+    });
     content.appendChild(votes);
 
     var voteButton = document.createElement('button');
@@ -117,4 +120,6 @@ $(document).ready(function() {
     $('.remove-vote').click(function(event) {
         postVote(this.name, 'false');
     });
+
+    $('.vote').popup(); // initialize popups
 });

@@ -22,7 +22,8 @@ block content
           div(class='ui card')
             div(class='content')
               div(class='header')= choice.name
-              div(class='meta')= choice.votes + ' votes'
+              - var popup = choice.voters.join('<br>');
+              div(class='meta vote' data-html=popup)= choice.votes + ' votes'
             if !choice.voted
               button(class='ui button add-vote' name=choice.name) Add vote
             else 
