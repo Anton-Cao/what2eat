@@ -2,6 +2,8 @@ var express = require('express');
 var hashPassword = require('../helpers/hash');
 var Poll = require('../models/Poll');
 
+var limit = Infinity; // max number of options (currently just for adding after creation)
+
 module.exports = function(io) {
   var router = express.Router();
 
@@ -14,9 +16,9 @@ module.exports = function(io) {
   router.get('/poll/:id/whoami', function(req, res, next) {
     var id = req.params.id;
     if (id == req.session.pollId && req.session.username) {
-      res.send(200, req.session.username);
+      res.status(200).send(req.session.username);
     } else {
-      res.send(400, 'not logged in');
+      res.status(400).send('not logged in');
     }
   });
 
@@ -43,6 +45,7 @@ module.exports = function(io) {
             choices,
             people,
             id,
+            settings: data.settings,
           });
         } else {
           // not logged in, render login page
@@ -70,6 +73,11 @@ module.exports = function(io) {
       voters: [],
     }));
 
+    input.settings = {
+      adminAddOnly: input.openAdd !== 'on',
+      maxChoices: input.maxChoices || limit,
+    };
+
     var poll = new Poll(input);
     poll.save(function(err, data) {
       res.redirect('/poll/' + data._id);
@@ -83,7 +91,7 @@ module.exports = function(io) {
     var password = req.body.password;
     Poll.findById(id, function(err, data) {
       if (err) {
-        res.send(404, 'Poll not found');
+        res.status(404).send('Poll not found');
       } else {
         var people = data.people;            
         var found = false; // whether user with matching username exists
@@ -96,9 +104,9 @@ module.exports = function(io) {
               req.session.username = username;
               req.session.pollId = id;
               req.session.save();
-              res.send(200, 'success');
+              res.status(200).send('success');
             } else {
-              res.send(401, 'Incorrect password');
+              res.status(401).send('Incorrect password');
             }
             break;
           }
@@ -117,7 +125,7 @@ module.exports = function(io) {
 
           Poll.findByIdAndUpdate(id, { $set: { people: people }}, function(err, response) {
             io.to(id).emit('update people', people.map(person => person.username));
-            res.send(200, 'success');
+            res.status(200).send('success');
           });
         }
       }
@@ -131,7 +139,7 @@ module.exports = function(io) {
     req.session.pollId = null;
     req.session.username = null;
     req.session.save();
-    res.send(200, 'success');
+    res.status(200).send('success');
   });
 
   /*
@@ -148,7 +156,7 @@ module.exports = function(io) {
       Poll.findById(id, function(err, data) {
         var foodChoices = data.foodChoices;
         if (err) {
-          res.send(404, 'Poll not found.');
+          res.status(404).send('Poll not found.');
           return;
         }
         var found = false;
@@ -182,16 +190,50 @@ module.exports = function(io) {
 
             Poll.findByIdAndUpdate(id, {$set: { foodChoices: foodChoices }}, function(err, response) {
               io.to(id).emit('update choices', foodChoices);
-              res.send(200, 'success');
+              res.status(200).send('success');
             });
             break;
           }
         } 
         if (!found) {
-          res.send(404, 'Choice not found.');
+          res.status(404).send('Choice not found.');
         }
       });
     }
+  });
+
+  /* 
+    POST create new choice in existing poll 
+  */
+  router.post('/poll/:id/newchoice', function(req, res, next) {
+    var id = req.params.id;
+    var newChoice = req.body.newChoice;
+
+    Poll.findById(id, function(err, data) {
+      var foodChoices = data.foodChoices;
+      if (err) {
+        res.status(404).send("Something borked and we couldn't find the poll :/");
+        return;
+      }
+      for (i in foodChoices) {
+        var foodChoice = foodChoices[i];
+        if (foodChoice.foodName === newChoice) {
+          res.status(404).send("ERROR: Can't create duplicate choices");
+          return;
+        }
+      };
+
+      foodChoices.push({
+        foodName: newChoice,
+        voteCount: 0, 
+        voters: [],
+      });
+
+      Poll.findByIdAndUpdate(id, {$set: { foodChoices: foodChoices }}, function(err, response) {
+        io.to(id).emit('update choices', foodChoices);
+        res.status(200).send('success');
+      });
+    });
   });
 
   return router;

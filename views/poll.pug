@@ -28,3 +28,17 @@ block content
               button(class='ui button add-vote' name=choice.name) Add vote
             else 
               button(class='ui positive button remove-vote' name=choice.name) Remove vote
+      if !settings.adminAddOnly
+        br
+        if choices.length >= settings.maxChoices
+          button(class='ui disabled button' id='create-new-choice') Add choice
+        else
+          button(class='ui button' id='create-new-choice') Add choice
+        div(id='create-choice-modal' class='ui modal')
+          i(class='close icon')
+          div(class='content')
+            form(id='new-choice-form' class='ui form')
+              div(class='field')
+                h3 Make a new choice
+                input(id='new-choice' type='text' name='newChoice' value='')
+              button(id='submit-new-choice' class='fluid ui primary button' type='submit') Create choice

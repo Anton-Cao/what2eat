@@ -2,8 +2,9 @@ var mongoose = require('mongoose');
 
 var PollSchema = new mongoose.Schema({
     pollName: String,
-    options: {
+    settings: {
         adminAddOnly: Boolean,
+        maxChoices: Number,
     },
     foodChoices: [{
         foodName: String,

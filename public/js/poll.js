@@ -1,6 +1,8 @@
 var username; // fetches username when page loads
 var urlBase = location.protocol + '//' + location.host + location.pathname;
 
+var limit = Infinity;
+
 /*
 Sends an upvote/downvote request
 name - name of food choice
@@ -122,4 +124,39 @@ $(document).ready(function() {
     });
 
     $('.vote').popup(); // initialize popups
+
+    $('#create-new-choice').click(function(event) {
+        event.preventDefault();
+        var foodChoices = $('#food-choices')[0];
+        var numFoods = foodChoices.childElementCount;
+        console.log(numFoods);
+        if (numFoods < limit) {
+            $('#create-choice-modal').modal('show')
+        } else {
+            alert('You have the max number of choices possible!')
+        };
+        if (numFoods+1 >= limit) { // +1 to account for new choice
+            $('#create-new-choice').toggleClass('disabled');
+        };
+    });
+
+    $('#new-choice-form').on('submit', function(e) {
+        e.preventDefault();
+        var newChoice = $('#new-choice').val();
+        console.log(newChoice);
+        if (newChoice.length > 0) {
+            $('#create-choice-modal').modal('hide');
+
+            $.ajax({
+                type: 'POST',
+                url: urlBase + '/newchoice',
+                data: {
+                    newChoice: newChoice,
+                },
+                error: function(message) {
+                   alert(message.responseText);
+                }
+            });
+        };
+    });
 });
