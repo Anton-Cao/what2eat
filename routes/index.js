@@ -221,7 +221,7 @@ module.exports = function(io) {
           res.status(404).send("ERROR: Can't create duplicate choices");
           return;
         }
-      };
+      }
 
       foodChoices.push({
         foodName: newChoice,
