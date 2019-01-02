@@ -74,7 +74,7 @@ module.exports = function(io) {
     }));
 
     input.settings = {
-      adminAddOnly: input.openAdd !== 'on',
+      addChoices: input.addChoices !== 'on',
       maxChoices: input.maxChoices || limit,
     };
 

@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var PollSchema = new mongoose.Schema({
     pollName: String,
     settings: {
+        addChoices: Boolean,
         adminAddOnly: Boolean,
         maxChoices: Number,
     },
