@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "create-env": "cp .env.base .env",
     "start-mongo": "mongod --pidfilepath mongo.pid --dbpath db > mongo.log &",
     "stop-mongo": "kill -TERM $(cat mongo.pid) && rm mongo.pid",
     "start": "node ./bin/www",

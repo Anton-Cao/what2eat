@@ -12,7 +12,7 @@ Built for [MIT TechX](https://techx.io).
 
 # Dev
 1. Run `npm install`
-1. Run `npm run create-env` to create the `.env` file if it doesn't exist yet, and edit the environment variables if necessary
+1. Run `npm run setup` to create the `.env` file if it doesn't exist yet, and edit the environment variables if necessary
 1. Run `npm run start-mongo` to start the mongo server
 1. Run `npm install -g nodemon` to install nodemon globally
 1. Run `npm run start-dev` to start the server with nodemon
