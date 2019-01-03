@@ -24,6 +24,12 @@ block content
             div(class='field')
               label Option #2
               input(type='text' name='foodChoice' value='')
+          
+          h4 Settings
+          div(id='poll-settings')
+            div(class='checkbox')
+              input(type='checkbox' name='addChoices')
+              label=' Enable voters to create new choices'
           br
           button(class='ui button' id='add-food') Add option
           input(class='ui primary button' type='submit' value='Create Poll')

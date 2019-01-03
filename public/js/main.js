@@ -42,7 +42,7 @@ $(document).ready(function() {
             newFoodChoice.appendChild(wrapper);
             foodChoices.appendChild(newFoodChoice);
         }
-        if (numFoods + 1 == limit) {
+        if (numFoods + 1 >= limit) {
             $('#add-food').toggleClass('disabled');
         }
     });
