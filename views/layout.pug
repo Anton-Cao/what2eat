@@ -15,9 +15,9 @@ html
     div(id='content')
       // include title and copy link button if rendering login or poll
       if (typeof(name) !== 'undefined') 
-        h1(id='poll-name' class='ui header' style='font-size: 3em; display: inline-block; margin-right: 10px;')= name
+        h1(id='poll-name' class='ui header' style='font-size: 3em; display: inline-block;')= name
         div(
-          class='ui icon button' id='copy' style='margin-top: -10px; float: right'
+          class='ui icon button' id='copy' style='position: relative; top: -0.5rem; left: 0.5rem;'
           data-tooltip='Copy link' data-position='bottom left' data-inverted=''
         ) 
           i(class="linkify icon")
