@@ -74,7 +74,7 @@ module.exports = function(io) {
     }));
 
     input.settings = {
-      addChoices: input.addChoices !== 'on',
+      addChoices: input.addChoices === 'on',
       maxChoices: input.maxChoices || limit,
     };
 

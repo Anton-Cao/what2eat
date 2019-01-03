@@ -28,7 +28,7 @@ block content
               button(class='ui button add-vote' name=choice.name) Add vote
             else 
               button(class='ui positive button remove-vote' name=choice.name) Remove vote
-      if !settings.addChoices
+      if settings.addChoices
         br
         if choices.length >= settings.maxChoices
           button(class='ui disabled button' id='create-new-choice') Add choice
