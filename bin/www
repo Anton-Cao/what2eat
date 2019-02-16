@@ -26,7 +26,9 @@ var server = http.createServer(app);
  * Use Socket.io
  */
 var io = app.io;
-io.attach( server );
+io.attach( server, {
+  pingTimeout: 60 * 1000
+});
 
 /**
  * Listen on provided port, on all network interfaces.
