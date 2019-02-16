@@ -22,6 +22,9 @@ io.on('connection', function(socket) {
     console.log(id);
     socket.join(id); // adds client to a room corresponding to the poll id
   });
+  socket.on('maintain connection', function(id, msg) {
+    socket.emit("pong");
+  });
 });
 
 var index = require('./routes/index')(io);

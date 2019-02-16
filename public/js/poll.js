@@ -89,6 +89,9 @@ $(document).ready(function() {
     var id = window.location.pathname.split('/').pop(); // what2eat.com/poll/:id
     var socket = io();
     socket.emit('poll id', id); // join the room corresponding to the id
+    setInterval(() => {
+        socket.emit('maintain connection', 'ping');
+    }, 30 * 1000);
     socket.on('update people', function(people) { // fires when a new user joins the poll
         $('#people-list').empty();
         people.forEach(person => {
