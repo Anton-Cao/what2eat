@@ -132,7 +132,11 @@ $(document).ready(function() {
         if (numFoods < limit) {
             $('#create-choice-modal').modal('show')
         } else {
-            alert('You have the max number of choices possible!')
+            Swal(
+                'Error',
+                'You have the max number of choices possible!',
+                'error'
+            )
         }
         if (numFoods+1 >= limit) { // +1 to account for new choice
             $('#create-new-choice').toggleClass('disabled');
